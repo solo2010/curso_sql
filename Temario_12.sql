@@ -25,3 +25,15 @@ INSERT INTO usuarios(nombre, clave) VALUES(null, 'payaso');
 --INtentamos actualizar el nombre usuario de uno de los campos con un usuario ya existente (genera error):
 UPDATE usuarios SET nombre='Juan Perez' WHERE clave = 'River';
 
+--EJERCICIOS--
+
+--Ejercicio 1--
+
+IF OBJECT_ID('libros') IS NOT NULL
+    DROP TABLE libros;
+
+CREATE TABLE libros(
+    codigo INTEGER NOT NULL,
+    titulo VARCHAR(40) NOT NULL,
+    
+);
