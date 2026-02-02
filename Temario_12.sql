@@ -35,5 +35,58 @@ IF OBJECT_ID('libros') IS NOT NULL
 CREATE TABLE libros(
     codigo INTEGER NOT NULL,
     titulo VARCHAR(40) NOT NULL,
-    
+    autor VARCHAR(20),
+    editorial VARCHAR(15),
+    PRIMARY KEY(codigo)
 );
+
+GO
+
+INSERT INTO libros(codigo, titulo, autor, editorial)
+    VALUES(1, 'El aleph', 'Borges', 'Emece');
+INSERT INTO libros(codigo, titulo, autor, editorial)
+    VALUES(2, 'Martin Fierro', 'Jose Hernandez', 'Planeta');
+INSERT INTO libros(codigo, titulo, autor, editorial)
+    VALUES(3, 'Aprenda PHP', 'Mario Molina', 'Nuevo Siglo');
+
+SELECT * FROM libros;
+
+--Esto va a generar error ya que no se puede repetir clave primaria
+INSERT INTO libros(codigo, titulo, autor, editorial)
+    VALUES(1, 'Satanás', 'Mario Mendoza', 'Planeta');
+
+--Esto va a generar error ya que no se puede tener run valor null en una llave primaria
+INSERT INTO libros(codigo, titulo, autor, editorial)
+    VALUES(NULL, 'La perra', 'Pilar Quintana', 'Emece');
+
+UPDATE libros SET codigo = 1 WHERE titulo = 'Martin Fierro';
+
+--Ejercicio 2
+
+IF OBJECT_ID('alumnos') IS NOT NULL
+    DROP TABLE alumnos;
+
+CREATE TABLE alumnos(
+    legajo VARCHAR(4) NOT NULL,
+    documento VARCHAR(8),
+    nombre VARCHAR(30),
+    domicilio VARCHAR(30),
+    PRIMARY KEY(documento)
+);
+
+EXEC sp_columns alumnos;
+
+INSERT INTO alumnos(legajo, documento, nombre, domicilio)
+    VALUES('A233', '22345345', 'Perez Mariana', 'Colon 234');
+INSERT INTO alumnos(legajo, documento, nombre, domicilio)
+    VALUES('A567', '23545345', 'Morales Marcos', 'Avellanada 348');
+
+SELECT * FROM alumnos;
+
+--Se ingresa documento existente, saca error ya que el documento es primary key
+INSERT INTO alumnos(legajo, documento, nombre, domicilio)
+    VALUES('A327', '22345345', 'Daniel Lopez', 'Barrio el Socorro');
+
+--Ingreso alumno con documento NULL, saca error ya que el documento es primary key
+INSERT INTO alumnos(Legajo, documento, nombre, domicilio)
+    VALUES('A327', NULL, 'Daniel Lopez', 'Barrio el Socorro');
