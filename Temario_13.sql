@@ -21,24 +21,101 @@ INSERT INTO libros(titulo, autor, editorial, precio)
 INSERT INTO libros(titulo, autor, editorial, precio)
     VALUES('Aprenda PHP', 'Mario Molina', 'Siglo XXI', 45.60);
 INSERT INTO libros(titulo, autor, editorial, precio)
-    VALUES('Alicia en el pais de las maravillas', 'Lewis Carroll', 'Paidos', 15.50);
+    VALUES('Alicia en el pais de las maravillas', 'Lewis Carrol', 'Paidos', 15.50);
 
 SELECT * FROM libros;
 
---Intenamos ingresar un valor para el campo "codigo" (genera error)
+--Intentemos ingresar un valor para el campo "codigo" (genera error)
 INSERT INTO libros(codigo, titulo, autor, editorial, precio)
-    VALUES(5,'Martin Fierro', 'Jose Hernandez', 'Paidos', 25); 
+    VALUES(5, 'Satanás', 'Mario Mendoza', 'Planeta', 50);
 
-EXEC sp_columns libros;
+--Intentemos cambiar el valor código de algún registro (genera error)
+UPDATE libros SET codigo = 2 WHERE titulo = 'El aleph';
 
---Eliminemos el último registro:
-DELETE FROM libros WHERE autor='Lewis Carroll';
+DELETE FROM libros WHERE autor = 'Lewis Carrol';
 
 SELECT * FROM libros;
 
---Ingresamos un quinto registro
 INSERT INTO libros(titulo, autor, editorial, precio)
-    VALUES('Marin fierro', 'Jose Hernandez', 'Paidos', 25);
+    VALUES('Satanás', 'Mario Mendoza', 'Planeta', 50);
 
-SELECT * FROM libros; --Aunque se eliminó el 4 registro, el identiti sigue la secuencia en la que iban los registros
+SELECT * FROM libros;
+
+--Ejercicio 1
+IF OBJECT_ID('medicamentos') IS NOT NULL
+    DROP TABLE medicamentos;
+
+CREATE TABLE medicamentos(
+    codigo INT IDENTITY,
+    nombre VARCHAR(20),
+    laboratorio VARCHAR(20),
+    precio FLOAT,
+    cantidad INT
+);
+
+EXEC sp_columns medicamentos;
+
+INSERT INTO medicamentos(nombre, laboratorio, precio, cantidad)
+    VALUES('Sertal', 'Roche', 5.2, 100);
+INSERT INTO medicamentos(nombre, laboratorio, precio, cantidad)
+    VALUES('Buscapina', 'Roche', 4.10, 200);
+INSERT INTO medicamentos(nombre, laboratorio, precio, cantidad)
+    VALUES('Amoxidal 500', 'Bayer', 15.60, 100);
+
+SELECT * FROM medicamentos;
+
+--Intentamos ingresar un registro con el campo código (genera error)
+INSERT INTO medicamentos(codigo, nombre, laboratorio, precio, cantidad)
+    VALUES(4, 'acetaminofen', 'Bayer', 15, 20);
+
+--Intentamos actualizar un valor de código (genera error)
+UPDATE medicamentos SET codigo = 5 WHERE nombre = 'Buscapina';
+
+SELECT * FROM medicamentos;
+
+DELETE FROM medicamentos WHERE codigo = 3;
+
+SELECT * FROM medicamentos;
+
+--Ejercicio 2
+IF OBJECT_ID('peliculas') IS NOT NULL
+    DROP TABLE peliculas;
+
+CREATE TABLE peliculas(
+    codigo INT IDENTITY,
+    titulo VARCHAR(40),
+    actor VARCHAR(40),
+    duracion INT,
+    PRIMARY KEY(codigo)
+);
+
+GO
+
+EXEC sp_columns peliculas;
+
+ insert into peliculas (titulo,actor,duracion)
+  values('Mision imposible','Tom Cruise',120);
+ insert into peliculas (titulo,actor,duracion)
+  values('Harry Potter y la piedra filosofal','Daniel R.',180);
+ insert into peliculas (titulo,actor,duracion)
+  values('Harry Potter y la camara secreta','Daniel R.',190);
+ insert into peliculas (titulo,actor,duracion)
+  values('Mision imposible 2','Tom Cruise',120);
+ insert into peliculas (titulo,actor,duracion)
+  values('La vida es bella','zzz',220);
+
+SELECT * FROM peliculas;
+
+--Intento actualizar el codigo de un registro (genera ERROR)
+UPDATE peliculas SET codigo = 7 WHERE actor = 'zzz';
+
+SELECT * FROM peliculas;
+
+DELETE FROM peliculas WHERE codigo = 5;
+
+INSERT INTO peliculas(titulo, actor, duracion)
+    VALUES('Castlevania', 'Alucard', 120);
+
+SELECT * FROM peliculas;
+
 

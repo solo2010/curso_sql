@@ -38,11 +38,11 @@ CREATE TABLE libros(
     codigo INTEGER NOT NULL,
     titulo VARCHAR(40) NOT NULL,
     autor VARCHAR(20),
-    editorial varchar(15),
+    editorial VARCHAR(15),
     PRIMARY KEY(codigo)
 );
 
-EXEC sp_columns libros;
+GO
 
 INSERT INTO libros(codigo, titulo, autor, editorial)
     VALUES(1, 'El aleph', 'Borges', 'Emece');
@@ -53,21 +53,17 @@ INSERT INTO libros(codigo, titulo, autor, editorial)
 
 SELECT * FROM libros;
 
---Ingreso registro con código repetido (genera error)
+--Esto va a generar error ya que no se puede repetir clave primaria
 INSERT INTO libros(codigo, titulo, autor, editorial)
-    VALUES(1, 'Cien años de soledad', 'Garcia Marquez', 'Planeta');
+    VALUES(1, 'Satanás', 'Mario Mendoza', 'Planeta');
 
---Ingreso valor null en el campo código (genera error)
+--Esto va a generar error ya que no se puede tener run valor null en una llave primaria
 INSERT INTO libros(codigo, titulo, autor, editorial)
-    VALUES(NULL, 'Satanás', 'Mario Mendoza', 'Emece');
+    VALUES(NULL, 'La perra', 'Pilar Quintana', 'Emece');
 
-SELECT * FROM libros
+UPDATE libros SET codigo = 1 WHERE titulo = 'Martin Fierro';
 
---Intento actualizar el código del libro de Martin Fierro a 1 (genera error)
-UPDATE libros SET codigo=1 WHERE titulo = 'Martin fierro';
-
---Ejercicio 2--
-
+--Ejercicio 2
 
 IF OBJECT_ID('alumnos') IS NOT NULL
     DROP TABLE alumnos;
@@ -77,22 +73,22 @@ CREATE TABLE alumnos(
     documento VARCHAR(8),
     nombre VARCHAR(30),
     domicilio VARCHAR(30),
-    PRIMARY KEY(documento),
-)
+    PRIMARY KEY(documento)
+);
 
 EXEC sp_columns alumnos;
 
 INSERT INTO alumnos(legajo, documento, nombre, domicilio)
     VALUES('A233', '22345345', 'Perez Mariana', 'Colon 234');
 INSERT INTO alumnos(legajo, documento, nombre, domicilio)
-    VALUES('A567', '23545345', 'Morales Marcos', 'Avellaneda 348');
+    VALUES('A567', '23545345', 'Morales Marcos', 'Avellanada 348');
 
 SELECT * FROM alumnos;
 
---Intento ingresar número de documento existente
+--Se ingresa documento existente, saca error ya que el documento es primary key
 INSERT INTO alumnos(legajo, documento, nombre, domicilio)
-    VALUES('A233', '22345345', 'Perez Mariana', 'Colon');
+    VALUES('A327', '22345345', 'Daniel Lopez', 'Barrio el Socorro');
 
---Intento ingresar documento nulo
-INSERT INTO alumnos(legajo, documento, nombre, domicilio)
-    VALUES('A233', NULL, 'Daniel Lopez', 'Caldas');
+--Ingreso alumno con documento NULL, saca error ya que el documento es primary key
+INSERT INTO alumnos(Legajo, documento, nombre, domicilio)
+    VALUES('A327', NULL, 'Daniel Lopez', 'Barrio el Socorro');
