@@ -1,0 +1,1 @@
+--Búsqueda de patrones (like - not like)
