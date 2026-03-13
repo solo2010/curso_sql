@@ -221,4 +221,34 @@ EXEC sp_bindrule RG_menor_fechaactual, 'vehiculos.horallegada';
 EXEC sp_bindrule RG_menor_fechaactual, 'vehiculos.horasalida';
 
 --Ingrese un registro en el cual la hora de entrada sea posterior a la hora de salida:
+INSERT INTO vehiculos VALUES('NAA613', 'm', '2026-03-13 07:40', '2026-03-13 07:00');
+SELECT * FROM vehiculos;
 
+--Intente establecer una restricción "check" que asegure que la fecha y hora de llegada a la playa
+--No lo permite porque hay un registro que no cumple la restricción.
+ALTER TABLE vehiculos
+    ADD CONSTRAINT CK_vehiculos_llegada_salida
+    CHECK (horasalida >= horallegada);
+
+--Elimine dicho registro:
+DELETE FROM vehiculos WHERE patente = 'NAA613';
+
+--Establezca la restricción "check" que no pudo establecer en el punto 19:
+ALTER TABLE vehiculos
+    ADD CONSTRAINT CK_vehiculos_llegada_salida
+    CHECK (horasalida >= horallegada);
+
+--Cree una restricción "default" que almacene el valor "b" en el campo "tipo:
+ALTER TABLE vehiculos
+    ADD CONSTRAINT DF_vehiculo_tipo
+    DEFAULT 'b'
+    FOR tipo;
+--Note que esta restricción va contra la regla asociada al campo "tipo" que solamente permite los 
+--valores "a", "c" y "m". SQL Server no informa el conflicto hasta que no intenta ingresar el valor 
+--por defecto.
+
+--Intente ingresar un registro con el valor por defecto para el campo "tipo":
+INSERT INTO vehiculos VALUES('YHI444', DEFAULT, GETDATE(), NULL);
+
+--Vea las reglas asociadas a "vehiculos" y las restricciones aplicadas a la misma tabla ejecutando 
+EXEC sp_helpconstraint vehiculos;
