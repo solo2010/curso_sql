@@ -222,3 +222,4 @@ EXEC sp_bindrule RG_menor_fechaactual, 'vehiculos.horasalida';
 
 --Ingrese un registro en el cual la hora de entrada sea posterior a la hora de salida:
 
+
