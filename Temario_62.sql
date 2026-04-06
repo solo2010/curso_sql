@@ -113,3 +113,7 @@ CREATE INDEX I_alumnos_apellidonombre
 --"alumnos":
 SELECT name FROM sysindexes
     WHERE name LIKE '%alumnos%';
+
+--Consulte la tabla "sysindexes", para ver los nombres de todos los índices creados por usted:
+SELECT name FROM sysindexes WHERE name LIKE 'I_%';
+
