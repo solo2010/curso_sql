@@ -1,0 +1,1 @@
+--Restricciones foreign key deshabilitar y eliminar (with check - nocheck)
